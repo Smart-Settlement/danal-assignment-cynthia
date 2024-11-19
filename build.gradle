@@ -13,40 +13,29 @@ java {
 	}
 }
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
-
 repositories {
 	mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-batch'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework:spring-orm:6.1.14'
+	// Spring Boot 관련 의존성
+	implementation 'org.springframework.boot:spring-boot-starter-batch'         // Spring Batch: 배치 작업을 위한 스타터
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'         // JDBC: 데이터베이스 연결을 위한 JDBC 스타터
+	implementation 'mysql:mysql-connector-java:8.0.29'                         // MySQL JDBC 드라이버
+	implementation 'org.springframework.boot:spring-boot-starter-logging'      // 로깅 스타터 (Spring Boot 기본 로깅)
 
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-	annotationProcessor 'org.projectlombok:lombok'
+	// Lombok: 코드에서 반복되는 부분을 줄이기 위한 라이브러리
+	compileOnly 'org.projectlombok:lombok'                                     // Lombok
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor' // Spring Boot 설정 프로세서
+	annotationProcessor 'org.projectlombok:lombok'                            // Lombok 애노테이션 프로세서
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'io.projectreactor:reactor-test'
-	testImplementation 'org.springframework.batch:spring-batch-test'
-	testImplementation 'org.springframework.security:spring-security-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
-	implementation 'mysql:mysql-connector-java:8.0.29'
-
-	implementation 'org.springframework.batch:spring-batch-core:5.0.0' // Spring Batch 5.x
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	// 테스트 관련 의존성
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'     // Spring Boot의 테스트 지원
+	testImplementation 'org.springframework.batch:spring-batch-test'            // Spring Batch 테스트 스타터
+	testImplementation 'io.projectreactor:reactor-test'                       // Reactor 비동기 테스트
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'               // JUnit 런처 의존성
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+	useJUnitPlatform()  // JUnit5 플랫폼 사용을 위한 설정
 }
