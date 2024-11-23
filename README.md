@@ -3,7 +3,7 @@
 이 프로젝트는 Spring Batch를 사용하여 CSV 파일에서 데이터를 읽고 데이터베이스에 저장하는 배치 애플리케이션입니다. Spring Batch의 청크 단위 처리 모델을 사용하며, JPA를 통해 데이터 저장을 관리합니다.
 
 📂 프로젝트 구조
-bash
+```bash
 src/
 ├── main/
 │   ├── java/
@@ -18,6 +18,7 @@ src/
 │   │   ├── application.properties    # 애플리케이션 설정
 │   │   ├── schema.sql                # 데이터베이스 테이블 정의 스크립트
 │   │   └── fulldata_07_24_04_P.csv   # 처리할 CSV 파일
+```
 
 ✨ 주요 기능
 청크 단위 처리: 한 번에 청크 크기만큼 데이터를 처리 (기본 설정: 1개씩 처리).
@@ -103,28 +104,21 @@ java
 @Bean
 public FlatFileItemReader<PublicData> reader() { ... }
 
-2. Processor
-   데이터를 처리 및 변환합니다. (현재는 입력 데이터를 그대로 반환)
-
-java
-@Bean
-public ItemProcessor<PublicData, PublicData> processor() { ... }
-
-3. Writer
+2. Writer
    가공된 데이터를 데이터베이스에 저장합니다.
 
 java
 @Bean
 public ItemWriter<PublicData> writer(PublicDataRepository publicDataRepository) { ... }
 
-4. Step
+3. Step
    단일 배치 처리 단계를 정의합니다.
 
 java
 @Bean
 public Step step1(PublicDataRepository publicDataRepository) { ... }
 
-5. Job
+4. Job
    Step을 조합하여 배치 작업(Job)을 정의합니다.
 
 java
