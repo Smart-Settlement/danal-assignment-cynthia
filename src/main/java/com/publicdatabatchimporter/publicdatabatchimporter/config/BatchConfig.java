@@ -27,8 +27,6 @@ import org.springframework.batch.item.ItemWriter;
 
 import com.publicdatabatchimporter.publicdatabatchimporter.model.PublicData;
 
-import lombok.RequiredArgsConstructor;
-
 @Configuration
 @EnableBatchProcessing  // Spring Batch 기능을 활성화하는 어노테이션
 public class BatchConfig {
