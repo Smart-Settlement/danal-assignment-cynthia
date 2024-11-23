@@ -10,6 +10,7 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.item.Chunk;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +19,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.publicdatabatchimporter.publicdatabatchimporter.config.BatchConfig;
-import com.publicdatabatchimporter.publicdatabatchimporter.dto.PublicDataDTO;
 import com.publicdatabatchimporter.publicdatabatchimporter.model.PublicData;
 import com.publicdatabatchimporter.publicdatabatchimporter.writer.PublicDataItemWriter;
 
@@ -59,15 +59,15 @@ public class PublicDataBatchImporterTest {
 	@Test
 	void testCsvFileReader() {
 		// 데이터베이스에 저장된 내용을 확인
-		List<PublicDataDTO> data = jdbcTemplate.query(
+		List<PublicData> data = jdbcTemplate.query(
 			"SELECT * FROM publicdata",
 			(rs, rowNum) -> {
-				PublicDataDTO publicData = new PublicDataDTO();
+				PublicData publicData = new PublicData();
 				publicData.setServiceName(rs.getString("serviceName"));
 				publicData.setServiceId(rs.getString("serviceId"));
 				publicData.setMunicipalityCode(rs.getString("municipalityCode"));
 				publicData.setManagementNumber(rs.getString("managementNumber"));
-				publicData.setLicenseDate(rs.getDate("licenseDate"));
+				// publicData.setLicenseDate(rs.getDate("licenseDate"));
 				return publicData;
 			}
 		);
@@ -77,39 +77,23 @@ public class PublicDataBatchImporterTest {
 		assertThat(data.get(0).getServiceName()).isNotNull();
 	}
 
-	// @Test
-	// void testItemProcessor() throws Exception {
-	// 	// 예제 PublicData 생성
-	// 	PublicDataDTO input = new PublicDataDTO();
-	// 	input.setServiceName("Test Service");
-	// 	input.setBusinessStatusName("Active");
-	//
-	// 	// Processor 호출
-	// 	PublicDataDTO processed = writer.process(input);
-	//
-	// 	// 데이터 검증
-	// 	assertThat(processed).isNotNull();
-	// 	assertThat(processed.getServiceName()).isEqualTo("Test Service");
-	// 	assertThat(processed.getBusinessStatusName()).isEqualTo("Active");
-	// }
-
 	@Test
 	void testItemWriter() throws Exception {
 		// 예제 데이터 생성
-		PublicDataDTO item = new PublicDataDTO();
+		PublicData item = new PublicData();
 		item.setServiceName("Test Service");
 		item.setServiceId("TEST001");
 		item.setMunicipalityCode("12345");
 
 		// 데이터 저장
-		// writer.write(List.of(item));
+		writer.write((Chunk<? extends PublicData>)List.of(item));
 
 		// 데이터베이스 확인
-		List<PublicDataDTO> data = jdbcTemplate.query(
+		List<PublicData> data = jdbcTemplate.query(
 			"SELECT * FROM publicdata WHERE serviceId = ?",
 			new Object[] { "TEST001" },
 			(rs, rowNum) -> {
-				PublicDataDTO publicData = new PublicDataDTO();
+				PublicData publicData = new PublicData();
 				publicData.setServiceName(rs.getString("serviceName"));
 				publicData.setServiceId(rs.getString("serviceId"));
 				publicData.setMunicipalityCode(rs.getString("municipalityCode"));
