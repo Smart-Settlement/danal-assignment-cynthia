@@ -1,6 +1,7 @@
 # public-data-batch-importer
 
-이 프로젝트는 Spring Batch를 사용하여 CSV 파일에서 데이터를 읽고 데이터베이스에 저장하는 배치 애플리케이션입니다. Spring Batch의 청크 단위 처리 모델을 사용하며, JPA를 통해 데이터 저장을 관리합니다.
+이 프로젝트는 Spring Batch를 사용하여 CSV 파일에서 데이터를 읽고 데이터베이스에 저장하는 배치 애플리케이션입니다. 
+Spring Batch의 청크 단위 처리 모델을 사용하며, JPA를 통해 데이터 저장을 관리합니다.
 
 ## 📂 프로젝트 구조
 ```bash
