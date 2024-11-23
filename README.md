@@ -22,17 +22,17 @@ src/
 
 ## ✨ 주요 기능
 
-청크 단위 처리: 한 번에 청크 크기만큼 데이터를 처리 (기본 설정: 1개씩 처리).
-유연한 Step 구성:
-CSV 파일에서 데이터를 읽기
-데이터를 가공 및 처리 (필요 시)
-가공된 데이터를 데이터베이스에 저장
-데이터베이스 통합:
-JPA 및 Spring Data를 사용하여 데이터 저장.
-에러 핸들링:
-Writer 단계에서 데이터 삽입 시 발생하는 에러를 캡처하고 로깅.
-실행 수명 주기 관리:
-Step 시작 및 완료 시 로그를 출력.
+- 청크 단위 처리: 한 번에 청크 크기만큼 데이터를 처리 (기본 설정: 1개씩 처리).
+- 유연한 Step 구성:
+  - CSV 파일에서 데이터를 읽기
+  - 데이터를 가공 및 처리 (필요 시)
+  - 가공된 데이터를 데이터베이스에 저장
+- 데이터베이스 통합:
+  - JPA 및 Spring Data를 사용하여 데이터 저장.
+- 에러 핸들링:
+  - Writer 단계에서 데이터 삽입 시 발생하는 에러를 캡처하고 로깅.
+- 실행 수명 주기 관리:
+  - Step 시작 및 완료 시 로그를 출력.
 
 ## 🛠️ 사전 준비
 
@@ -107,7 +107,7 @@ BatchConfig.java
 배치 작업을 구성하는 주요 설정 클래스입니다.
 
 1. Reader
-   CSV 파일에서 데이터를 읽고 DTO로 매핑합니다.
+   CSV 파일에서 데이터를 읽고 DTO로 매핑
 
 ```ava
 @Bean
@@ -115,7 +115,7 @@ public FlatFileItemReader<PublicData> reader() { ... }
 ```
 
 2. Writer
-   가공된 데이터를 데이터베이스에 저장합니다.
+   가공된 데이터를 데이터베이스에 저장
 
 ```java
 @Bean
@@ -140,31 +140,30 @@ public Job importJob(PublicDataRepository publicDataRepository) { ... }
 
 ## 🐞 디버깅 및 로깅
 
-로그 레벨 설정: 디버깅을 위해 application.properties 파일에 다음을 추가하세요:
+1. 로그 레벨 설정: 디버깅을 위해 application.properties 파일에 다음을 추가:
 
 ```properties
 logging.level.org.springframework.batch=DEBUG
 logging.level.com.publicdatabatchimporter=DEBUG
 ```
 
-Job 수명 주기 로그:
+2. Job 수명 주기 로그:
 
-Step 시작 및 종료 시 로그가 출력됩니다.
-Writer는 처리된 항목 수를 로깅합니다.
+- Step 시작 및 종료 시 로그가 출력됩니다.
+- Writer는 처리된 항목 수를 로깅합니다.
 
 ## 🛠️ 커스터마이징
 
-청크 크기 변경: Step 정의에서 처리할 데이터의 크기를 변경할 수 있습니다.
-Processor 로직 추가: 데이터를 가공하거나 유효성을 검증하는 로직을 ItemProcessor에 추가하세요.
-에러 핸들링: Writer에서 특정 예외에 대한 처리를 확장할 수 있습니다.
+- 청크 크기 변경: Step 정의에서 처리할 데이터의 크기를 변경할 수 있습니다.
+- 에러 핸들링: Writer에서 특정 예외에 대한 처리를 확장할 수 있습니다.
 
 ## 🛡️ 에러 핸들링
 
-CSV 파일의 잘못된 행: 누락되거나 유효하지 않은 필드는 처리 중 로깅됩니다.
-데이터베이스 에러: Writer에서 데이터 삽입 시 발생하는 에러를 캡처하고 로그를 남깁니다.
+- CSV 파일의 잘못된 행: 누락되거나 유효하지 않은 필드는 처리 중 로깅됩니다.
+- 데이터베이스 에러: Writer에서 데이터 삽입 시 발생하는 에러를 캡처하고 로그를 남깁니다.
 
 ## 📖 참고 자료
 
-Spring Batch 공식 문서
-Spring Data JPA 공식 문서
+- Spring Batch 공식 문서
+- Spring Data JPA 공식 문서
 
