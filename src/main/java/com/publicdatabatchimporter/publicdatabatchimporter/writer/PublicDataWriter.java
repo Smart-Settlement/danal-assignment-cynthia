@@ -7,7 +7,6 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.stereotype.Component;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.publicdatabatchimporter.publicdatabatchimporter.dto.PublicDataDTO;
 import com.publicdatabatchimporter.publicdatabatchimporter.model.PublicData;
 import com.publicdatabatchimporter.publicdatabatchimporter.repository.PublicDataRepository;
 
