@@ -25,7 +25,7 @@ src/
 
 - 청크 단위 처리: 한 번에 청크 크기만큼 데이터를 처리 (기본 설정: 1개씩 처리).
 - 유연한 Step 구성:
-    - CSV 파일에서 데이터를 읽기(CSV UFT-8 파일로 변경하기)
+    - CSV 파일에서 데이터를 읽기
     - 데이터를 가공 및 처리 (필요 시)
     - 가공된 데이터를 데이터베이스에 저장
 - 데이터베이스 통합:
@@ -62,8 +62,10 @@ spring.batch.jdbc.table-prefix=BATCH_
 ```
 
 2. CSV 파일
-   (CSV UFT-8 파일로 변경 및 이름 변경)
-   fulldata_07_24_04_P.csv 파일을 resources/ 디렉토리에 배치하세요. 파일은 다음과 같은 구조를 가져야 합니다:
+    - https://www.data.go.kr/data/15096283/standard.do
+    - 링크(공공데이터포털) "전국일반음식점표준데이터" 파일을 다운로드하고, CSV 파일 압축을 해제합니다.
+    - CSV UFT-8 파일로 변경 및 fulldata_07_24_04_P.csv 로 이름 변경
+    - fulldata_07_24_04_P.csv 파일을 resources/ 디렉토리에 배치하세요. 파일은 다음과 같은 구조를 가져야 합니다:
 
 ```mathematica
 헤더1, 헤더2, ..., 헤더N
@@ -71,7 +73,7 @@ spring.batch.jdbc.table-prefix=BATCH_
 ```
 
 3. 데이터베이스 테이블
-   데이터를 저장할 테이블을 생성하려면 schema.sql 스크립트를 실행하세요:
+   데이터를 저장할 테이블을 생성하려면 resources/schema.sql 스크립트를 실행하세요:
 
 ```sql
 CREATE TABLE public_data (
