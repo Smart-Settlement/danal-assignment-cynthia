@@ -1,6 +1,6 @@
 # public-data-batch-importer
 
-- 이 프로젝트는 Spring Batch를 사용하여 CSV 파일에서 데이터를 읽고 데이터베이스에 저장하는 배치 애플리케이션입니다. 
+- 이 프로젝트는 Spring Batch를 사용하여 CSV 파일에서 데이터를 읽고 데이터베이스에 저장하는 배치 애플리케이션입니다.
 - Spring Batch의 청크 단위 처리 모델을 사용하며, JPA를 통해 데이터 저장을 관리합니다.
 
 ## 📂 프로젝트 구조
@@ -25,22 +25,22 @@ src/
 
 - 청크 단위 처리: 한 번에 청크 크기만큼 데이터를 처리 (기본 설정: 1개씩 처리).
 - 유연한 Step 구성:
-  - CSV 파일에서 데이터를 읽기
-  - 데이터를 가공 및 처리 (필요 시)
-  - 가공된 데이터를 데이터베이스에 저장
+    - CSV 파일에서 데이터를 읽기(CSV UFT-8 파일로 변경하기)
+    - 데이터를 가공 및 처리 (필요 시)
+    - 가공된 데이터를 데이터베이스에 저장
 - 데이터베이스 통합:
-  - JPA 및 Spring Data를 사용하여 데이터 저장.
+    - JPA 및 Spring Data를 사용하여 데이터 저장.
 - 에러 핸들링:
-  - Writer 단계에서 데이터 삽입 시 발생하는 에러를 캡처하고 로깅.
+    - Writer 단계에서 데이터 삽입 시 발생하는 에러를 캡처하고 로깅.
 - 실행 수명 주기 관리:
-  - Step 시작 및 완료 시 로그를 출력.
+    - Step 시작 및 완료 시 로그를 출력.
 
 ## 🛠️ 사전 준비
 
 - JDK 17
 - Spring Framework 6.x
-- Spring Batch 5.x
-- mysql 8.x
+- Spring Batch 5.0.0
+- mysql 8.0.33
 - gradle 8.x
 
 ## ⚙️ 설정 방법
@@ -48,11 +48,11 @@ src/
    application.properties 파일에 데이터베이스 연결 정보를 설정하세요:
 
 ```properties
-# 데이터베이스 설정
-spring.datasource.url=jdbc:mysql://localhost:3306/your_database
-spring.datasource.username=your_username
-spring.datasource.password=your_password
-spring.jpa.hibernate.ddl-auto=update
+# 데이터베이스 설정(로컬)
+spring.datasource.url=jdbc:mysql://localhost:3306/publicdatabatchimporter?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useLegacyDatetimeCode=false&useUnicode=true&characterEncoding=UTF-8
+spring.datasource.username=user
+spring.datasource.password=8888
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 # Hibernate SQL 로깅 (선택 사항)
 spring.jpa.show-sql=true
@@ -62,6 +62,7 @@ spring.batch.jdbc.table-prefix=BATCH_
 ```
 
 2. CSV 파일
+   (CSV UFT-8 파일로 변경 및 이름 변경)
    fulldata_07_24_04_P.csv 파일을 resources/ 디렉토리에 배치하세요. 파일은 다음과 같은 구조를 가져야 합니다:
 
 ```mathematica
@@ -74,14 +75,14 @@ spring.batch.jdbc.table-prefix=BATCH_
 
 ```sql
 CREATE TABLE public_data (
-id INT AUTO_INCREMENT PRIMARY KEY,
-service_name VARCHAR(255) NULL,
-service_id VARCHAR(255) NULL,
-municipality_code VARCHAR(255) NULL,
-management_number VARCHAR(255) NULL,
-license_date VARCHAR(255) NULL,
-coordinate_x DECIMAL(10, 6) NULL,
-coordinate_y DECIMAL(10, 6) NULL
+                             id INT AUTO_INCREMENT PRIMARY KEY,
+                             service_name VARCHAR(255) NULL,
+                             service_id VARCHAR(255) NULL,
+                             municipality_code VARCHAR(255) NULL,
+                             management_number VARCHAR(255) NULL,
+                             license_date VARCHAR(255) NULL,
+                             coordinate_x DECIMAL(10, 6) NULL,
+                             coordinate_y DECIMAL(10, 6) NULL
 -- 생략
 );
 ```

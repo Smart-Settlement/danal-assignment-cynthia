@@ -115,19 +115,19 @@ public class BatchConfig {
 					return;
 				}
 				if (items.isEmpty()) {
-					System.out.println("Writer received no items.");
+					System.out.println("Writer received 빈값 items.");
 					return;
 				}
 				System.out.println("Writer received " + items.size() + " items.");
 				for (PublicData item : items) {
 					System.out.println("Item to save: " + item);
 					if (item.getServiceName() == null) {
-						System.out.println("Invalid item: ServiceName is null for item " + item);
+						System.out.println("Invalid item: 데이터 ServiceName is null for item " + item);
 					}
 				}
 
 				// 데이터를 데이터베이스에 저장
-				System.out.println("Attempting to save items...");
+				System.out.println("items 저장하기 시작 ! ");
 				publicDataRepository.saveAll(items); // JPA를 통해 데이터 저장
 				System.out.println("Data saved successfully: " + items.size() + " items.");
 			} catch (Exception e) {
