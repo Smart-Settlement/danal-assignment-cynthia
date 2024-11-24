@@ -144,7 +144,6 @@ public class BatchConfig {
 		return new StepBuilder("step1", jobRepository)
 			.<PublicData, PublicData>chunk(1) // Chunk 단위 처리 (1개씩 처리)
 			.reader(reader()) // Reader 설정
-			// .processor(processor()) // Processor 설정
 			.writer(writer(publicDataRepository)) // Writer 설정
 			.listener(new StepExecutionListener() { // Step 실행 이벤트 리스너 추가
 				@Override
