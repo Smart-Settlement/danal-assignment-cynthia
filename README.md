@@ -48,11 +48,11 @@ src/
    application.properties 파일에 데이터베이스 연결 정보를 설정하세요:
 
 ```properties
-# 데이터베이스 설정
-spring.datasource.url=jdbc:mysql://localhost:3306/your_database
-spring.datasource.username=your_username
-spring.datasource.password=your_password
-spring.jpa.hibernate.ddl-auto=update
+# 데이터베이스 설정(로컬)
+spring.datasource.url=jdbc:mysql://localhost:3306/publicdatabatchimporter?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&useLegacyDatetimeCode=false&useUnicode=true&characterEncoding=UTF-8
+spring.datasource.username=user
+spring.datasource.password=8888
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 
 # Hibernate SQL 로깅 (선택 사항)
 spring.jpa.show-sql=true
@@ -62,6 +62,7 @@ spring.batch.jdbc.table-prefix=BATCH_
 ```
 
 2. CSV 파일
+   (CSV UFT-8 파일로 변경 및 이름 변경)
    fulldata_07_24_04_P.csv 파일을 resources/ 디렉토리에 배치하세요. 파일은 다음과 같은 구조를 가져야 합니다:
 
 ```mathematica
